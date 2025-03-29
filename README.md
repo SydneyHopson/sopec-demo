@@ -187,7 +187,7 @@ Portfolio: https://tinyurl.com/ReignMobileAgency
 GitHub: https://github.com/SydneyHopson
 
 🧑‍💼 Team Support 1
-Name: Jessie Fish
+Name: Jesse Fish
 Title: he has to add
 Contact: he has to add
 Phone: he has to add
@@ -195,11 +195,11 @@ Portfolio: he has to add
 GitHub: he has to add
 
 🧑‍💼 Team Project Manager
-Name: Add name here
-Title: he has to add
-Contact: he has to add
-Phone: he has to add
-Portfolio: he has to add
+Name: Noelle Brooks 
+Title: Project Strategist 
+Contact: noellethestoryteller@gmail.com
+Phone: 478-250-3494
+Portfolio: noellebrooks.com
 GitHub: he has to add
 
 📌 Notes for Team
