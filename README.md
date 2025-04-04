@@ -1,6 +1,6 @@
 # 🌱 SOPEC Website Redesign – Internal Project README
 
-## 📛 Project Name
+## 💼 Project Name
 **SOPEC Website Redesign Demo**  
 _Official Website for the Southeast Ohio Public Energy Council (SOPEC)_
 
@@ -30,6 +30,8 @@ Redesign and rebuild the SOPEC website using modern frontend technologies and a 
 - Mapbox integration for service area maps
 - Hosted on Vercel with Cloudflare protection
 - Optimized for performance (Lighthouse)
+- Interactive dashboard UI for admin pages
+- Programs, Grants, Uploads, and Documents pages fully custom-built
 
 ---
 
@@ -39,6 +41,11 @@ Redesign and rebuild the SOPEC website using modern frontend technologies and a 
 - Homepage video hero with overlaid headline
 - Side navigation with submenus
 - Key pages: About, Programs, Membership, Energy Services, Join SOPEC
+- Admin Dashboard with:
+  - Animated Communities Page with leaderboard
+  - Grants spreadsheet-style layout
+  - Uploads page with mock Canva-like UI
+  - Documents center with dynamic document cards and news-style snippets
 - Footer with contact, programs, and site links
 - Reusable components in `/sections/`
 - Real-time features supported by Firebase
@@ -84,80 +91,71 @@ Redesign and rebuild the SOPEC website using modern frontend technologies and a 
 ├── next.config.ts
 ├── postcss.config.mjs
 └── README.md
-🖥️ Pages & Sections To Build
-NavBar – Logo + Search + Mobile Side Menu
+```
 
-Side Menu – Slides in, submenus:
+---
 
-WHO IS SOPEC?
+## 🖥️ Pages & Sections To Build
 
-OUR TEAM
+### Public Site
+- NavBar with mobile-friendly SideMenu
+- Hero Section with video overlay
+- About Section ("Who is SOPEC?")
+- Programs Section (Modern, interactive)
+- Membership Page (Grants, Member Orgs)
+- Energy Services Page (Pricing & Aggregation)
+- Footer (Contact, programs, nav links)
 
-GOVERNANCE
+### Admin Dashboard
+- Header with session-based greeting
+- Communities Leaderboard with animated population + profile images
+- Programs grid with badges and icons
+- Grants section styled like a spreadsheet
+- Uploads mock UI with Canva-inspired design
+- Documents hub with cards and news-style insights
 
-ANNUAL REPORTS
+---
 
-PUBLIC NOTICES
+## 🥐 QA / Accessibility Checklist
 
-EMPLOYMENT
+- [x] Mobile-first responsive
+- [x] Keyboard navigable
+- [x] Screen reader friendly
+- [x] Color contrast WCAG 2.1 AA
+- [x] “Skip to content” link
+- [x] Alt text on all images
+- [x] Lighthouse score > 90 for Perf, SEO, Access
 
-PROGRAMS → Green Initiatives, REAP
+---
 
-MEMBERSHIP → Grants, Member Orgs
+## 🔐 Authentication
+- Using Clerk for login/signup
+- Supports OAuth and JWT
+- Auth required for admin access
 
-ENERGY SERVICES → Aggregation, Pricing
+---
 
-JOIN SOPEC
+## 📍 Mapping Integration
+- Using Mapbox to show service regions
+- Optional real-time data updates via Firebase
 
-Hero Section – Hunter Green background, banner video, overlay text
+---
 
-About Section – "Who is SOPEC?"
+## 🚀 Deployment
+- Hosted on: Vercel
+- CI/CD setup: Push to main = auto-deploy
+- GitHub integration enabled
 
-Footer – Bigger logo, contact info, nav links, office hours
+---
 
-🧪 QA / Accessibility Checklist
- Mobile-first responsive
+## ⚙️ Next.js Setup & Local Dev
 
- Keyboard navigable
-
- Screen reader friendly
-
- Color contrast WCAG 2.1 AA
-
- “Skip to content” link
-
- Alt text on all images
-
- Lighthouse score > 90 for Perf, SEO, Access
-
-🔐 Authentication
-Using Clerk for login/signup
-
-Supports OAuth and JWT
-
-Auth required for admin access
-
-📍 Mapping Integration
-Using Mapbox to show service regions
-
-Optional real-time data updates via Firebase
-
-🚀 Deployment
-Hosted on: Vercel
-
-CI/CD setup: Push to main = auto-deploy
-
-GitHub integration enabled
-
-⚙️ Next.js Setup & Local Dev
 This is a Next.js project bootstrapped with create-next-app.
 
-Getting Started
+### Getting Started
 First, run the development server:
 
-bash
-Copy
-Edit
+```bash
 npm run dev
 # or
 yarn dev
@@ -165,62 +163,68 @@ yarn dev
 pnpm dev
 # or
 bun dev
+```
+
 Open http://localhost:3000 in your browser.
 
-You can start editing by modifying app/page.tsx. The page auto-updates.
+You can start editing by modifying `app/page.tsx`. The page auto-updates.
 
-Fonts use next/font for Geist.
+Fonts use `next/font` for Geist.
 
-🧠 Learn More
-Next.js Docs
+---
 
-Next.js GitHub
+## 🧠 Learn More
+- [Next.js Docs](https://nextjs.org/docs)
+- [Next.js GitHub](https://github.com/vercel/next.js)
+- [Vercel Deployment Guide](https://vercel.com/docs)
 
-Vercel Deployment Guide
+---
 
-🧑‍💼 Team Lead
-Name: Sydney Hopson
-Title: Full Stack Developer @ Reign Mobile
-Contact: Karatesyd@icloud.com
-Phone: 770-294-1987
-Portfolio: https://tinyurl.com/ReignMobileAgency
-GitHub: https://github.com/SydneyHopson
+## 🧑‍💼 Team Lead
+**Name:** Sydney Hopson  
+**Title:** Full Stack Developer @ Reign Mobile  
+**Contact:** Karatesyd@icloud.com  
+**Phone:** 770-294-1987  
+**Portfolio:** https://tinyurl.com/ReignMobileAgency  
+**GitHub:** https://github.com/SydneyHopson
 
-🧑‍💼 Team Support 1
-Name: Jessie Fish
-Title: he has to add
-Contact: he has to add
-Phone: he has to add
-Portfolio: he has to add
-GitHub: he has to add
+---
 
-🧑‍💼 Team Project Manager
-Name: Add name here
-Title: he has to add
-Contact: he has to add
-Phone: he has to add
-Portfolio: he has to add
-GitHub: he has to add
+## 🧑‍💼 Team Support 1
+**Name:** Jessie Fish  
+**Title:** he has to add  
+**Contact:** he has to add  
+**Phone:** he has to add  
+**Portfolio:** he has to add  
+**GitHub:** he has to add
 
-📌 Notes for Team
-Keep all sections in /src/sections/ (e.g., Navbar.tsx, Footer.tsx, etc.)
+---
 
-Use local logo/video assets from /public/
+## 🧑‍💼 Team Project Manager
+**Name:** Add name here  
+**Title:** he has to add  
+**Contact:** he has to add  
+**Phone:** he has to add  
+**Portfolio:** he has to add  
+**GitHub:** he has to add
 
-Use Tailwind color #0B3D02 for hunter green accents
+---
 
-Stick to the page layout and menu structure
+## 📌 Notes for Team
 
-Define content types clearly in Sanity Studio
+- Keep all sections in `/src/sections/` (e.g., `Navbar.tsx`, `Footer.tsx`, etc.)
+- Use local logo/video assets from `/public/`
+- Use Tailwind color `#0B3D02` for hunter green accents
+- Stick to the page layout and menu structure
+- Define content types clearly in Sanity Studio
+- Firebase is for real-time features, not auth
 
-Firebase is for real-time features, not auth
+---
 
-🌿 How to Add to a Git Branch
+## 🌿 How to Add to a Git Branch
 To work on a new feature:
 
-bash
-Copy
-Edit
+```bash
 # Create a new branch
 git checkout -b feature/your-feature-name
 
@@ -230,4 +234,6 @@ git commit -m "Add: your feature description"
 
 # Push your branch to GitHub
 git push origin feature/your-feature-name
+```
+
 Then go to GitHub to open a Pull Request (PR). Tag Sydney if it needs review.

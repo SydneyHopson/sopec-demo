@@ -1,61 +1,161 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import SideMenu from "./SideMenu";
-import { Menu } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import logo from "../../public/assets/logo.png";
+import menu from "../../public/assets/menu.svg";
+import close from "../../public/assets/close.svg";
+import { navLinks, subMenus } from "../../constants";
 
-export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const Navbar = () => {
+  const [active, setActive] = useState("Home");
+  const [toggle, setToggle] = useState(false);
+  const [currentSubMenu, setCurrentSubMenu] = useState<string | null>(null);
+
+  const handleMobileNavClick = (nav: string) => {
+    const lower = nav.toLowerCase();
+    if (subMenus[lower]) {
+      setCurrentSubMenu(lower);
+    } else {
+      setActive(nav);
+      setToggle(false);
+    }
+  };
 
   return (
-    <>
-      {/* Side Menu */}
-      <SideMenu isOpen={menuOpen} toggleMenu={() => setMenuOpen(!menuOpen)} />
+    <nav className="bg-huntergreen w-full flex py-6 justify-between items-center navbar relative">
+      {/* Logo */}
+      <Image
+        src={logo}
+        alt="SOPEC"
+        width={124}
+        height={32}
+        className="object-contain"
+        priority
+      />
 
-      {/* Navbar */}
-      <header>
-        {/* Top Bar */}
-        <div className="bg-[#0B3D02] text-white p-3 flex justify-between items-center">
-          <span className="text-sm font-light">Sustainable Ohio Public Energy Council</span>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-white text-black px-3 py-1 rounded-full w-1/4 sm:w-1/6 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-        </div>
+      {/* Desktop Nav */}
+      <ul className="list-none sm:flex hidden justify-end items-center flex-1">
+        {navLinks.map((nav, index) => (
+          <li
+            key={nav.id}
+            className={`relative font-poppins font-normal cursor-pointer text-[16px] transition-all duration-300 ease-in-out
+              ${
+                active === nav.title
+                  ? "bg-gradient-to-r from-[#5ce1e6] to-[#33bbcf] bg-clip-text text-transparent animate-pulse"
+                  : "text-dimWhite"
+              }
+              hover:bg-gradient-to-r hover:from-[#5ce1e6] hover:to-[#33bbcf] hover:bg-clip-text hover:text-transparent hover:animate-pulse
+              ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
+            onMouseEnter={() => setActive(nav.title)}
+            onMouseLeave={() => setActive("Home")}
+          >
+            <a href={`#${nav.id}`}>{nav.title}</a>
 
-        {/* Main Navigation */}
-        <nav className="bg-white text-green-700 p-4 shadow-md">
-          <div className="container mx-auto flex justify-between items-center">
-            {/* Clickable SOPEC Logo */}
-            <Link href="/">
-              <Image
-                src="https://images.squarespace-cdn.com/content/v1/5bc0dceb77889706f8750fc4/73f677bd-27b1-4773-a5ef-f3f2f396150b/sopec_10yr_logo_hrz_green.png?format=1500w"
-                alt="SOPEC Logo"
-                width={150}
-                height={50}
-                className="h-auto w-40 cursor-pointer"
-              />
-            </Link>
+            {/* Desktop Dropdown */}
+            <AnimatePresence>
+              {subMenus[nav.title.toLowerCase()] &&
+                active === nav.title && (
+                  <motion.ul
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute left-0 top-full mt-2 bg-black-gradient text-white border-2 border-[#5ce1e6] rounded-xl p-4 min-w-[200px] z-20 shadow-md animate-border-glow"
+                  >
+                    {subMenus[nav.title.toLowerCase()].map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="py-2 px-3 hover:bg-gradient-to-r hover:from-[#5ce1e6] hover:to-[#33bbcf] hover:bg-clip-text hover:text-transparent hover:animate-pulse transition-all duration-300 text-sm font-medium"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
+            </AnimatePresence>
+          </li>
+        ))}
+      </ul>
 
-            {/* Mobile Menu Button */}
-            <button onClick={() => setMenuOpen(true)} className="md:hidden text-green-700 text-2xl">
-              <Menu size={24} />
-            </button>
+      {/* Hamburger Icon */}
+      <div className="sm:hidden flex justify-end items-center ml-auto">
+        <Image
+          src={toggle ? close : menu}
+          alt="menu"
+          width={28}
+          height={28}
+          className="object-contain"
+          onClick={() => {
+            setToggle(!toggle);
+            setCurrentSubMenu(null);
+          }}
+        />
 
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex space-x-6">
-              <Link href="/about-us" className="hover:text-[#0B3D02]">About Us</Link>
-              <Link href="/programs" className="hover:text-[#0B3D02]">Programs</Link>
-              <Link href="/membership" className="hover:text-[#0B3D02]">Membership</Link>
-              <Link href="/energy-services" className="hover:text-[#0B3D02]">Energy Services</Link>
-              <Link href="/join-sopec" className="hover:text-[#0B3D02]">Join SOPEC</Link>
-            </div>
-          </div>
-        </nav>
-      </header>
-    </>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {toggle && (
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 100 }}
+              transition={{ type: "spring", duration: 0.3 }}
+              className="fixed top-20 right-0 bg-black-gradient text-white border-2 border-[#5ce1e6] animate-border-glow rounded-xl p-6 z-50 w-fit min-w-[200px] shadow-md"
+            >
+              {/* Main Menu */}
+              {!currentSubMenu && (
+                <ul className="space-y-4">
+                  {navLinks.map((nav) => (
+                    <li
+                      key={nav.id}
+                      className={`text-base font-medium cursor-pointer transition-all duration-300 ease-in-out
+                        ${
+                          active === nav.title
+                            ? "bg-gradient-to-r from-[#5ce1e6] to-[#33bbcf] bg-clip-text text-transparent animate-pulse"
+                            : "text-white"
+                        }
+                        hover:bg-gradient-to-r hover:from-[#5ce1e6] hover:to-[#33bbcf] hover:bg-clip-text hover:text-transparent hover:animate-pulse
+                      `}
+                      onClick={() => handleMobileNavClick(nav.title)}
+                    >
+                      {nav.title}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* SubMenu */}
+              {currentSubMenu && (
+                <>
+                  <div className="flex items-center mb-4">
+                    <button
+                      onClick={() => setCurrentSubMenu(null)}
+                      className="text-sm font-bold mr-2"
+                    >
+                      ← Back
+                    </button>
+                    <span className="text-lg font-semibold capitalize">
+                      {currentSubMenu.replace(/^\w/, (c) => c.toUpperCase())}
+                    </span>
+                  </div>
+                  <ul className="space-y-3">
+                    {subMenus[currentSubMenu].map((item, index) => (
+                      <li
+                        key={index}
+                        className="text-sm font-medium text-white hover:bg-gradient-to-r hover:from-[#5ce1e6] hover:to-[#33bbcf] hover:bg-clip-text hover:text-transparent hover:animate-pulse"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </nav>
   );
-}
+};
+
+export default Navbar;

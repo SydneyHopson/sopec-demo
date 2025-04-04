@@ -2,65 +2,191 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-export default function Footer() {
-  return (
-    <footer className="bg-[#0B3D02] text-white py-4 px-6 text-xs">
-      <div className="container mx-auto flex flex-col items-center text-center">
-        {/* SOPEC Logo (Clickable) */}
-        <Link href="/" className="mb-3">
-          <Image 
-            src="/image/SOPEC-white.png" 
-            alt="SOPEC Logo" 
-            width={180} 
-            height={60} 
-            className="h-auto w-40 justify-items-center"
-          />
+import {
+  footerLogoInfo,
+  footerAddressInfo,
+  footerContactInfo,
+  footerProgramList,
+  footerQuickLinks,
+  socialMedia,
+  footerCopyright,
+  SocialMediaItem,
+  ContactSection,
+  ContactItem,
+  QuickLink,
+  FooterListItemType,
+} from "../../constants/index";
+
+const renderListItem = (
+  item: FooterListItemType,
+  index: number,
+  array: FooterListItemType[]
+) => {
+  const marginBottomClass = index !== array.length - 1 ? "mb-1" : "mb-0";
+  const commonClasses = `font-poppins font-normal text-[12px] leading-[18px] text-gray-300 ${marginBottomClass}`;
+
+  if (typeof item === "string") {
+    return (
+      <p key={index} className={commonClasses}>
+        {item}
+      </p>
+    );
+  }
+
+  if (item && "type" in item && (item.type === "tel" || item.type === "mail")) {
+    return (
+      <p key={item.href || index} className={commonClasses}>
+        <a href={item.href} className="hover:text-white underline">
+          {item.text}
+        </a>
+      </p>
+    );
+  }
+
+  if (item && "name" in item && "href" in item) {
+    return (
+      <li key={item.name} className={`${commonClasses} hover:text-white cursor-pointer list-none`}>
+        <Link href={item.href} className="underline">
+          {item.name}
         </Link>
+      </li>
+    );
+  }
 
-        <div className="grid md:grid-cols-3 gap-4 w-full">
-          {/* SOPEC Info */}
-          <div className="leading-tight">
-            <h3 className="font-bold text-sm">Sustainable Ohio Public Energy Council</h3>
-            <p>Athens: 340 W. State St., Unit 134 A-D</p>
-            <p>Dayton: 31 S. Main St., Ste 385</p>
-            <p>Cleveland: 1468 West 9th St., Ste 100</p>
-            <p>Upper Arlington: 2025 Riverside Dr.</p>
-          </div>
+  console.warn("Unknown item type in renderListItem:", item);
+  return null;
+};
 
-          {/* Contact Info */}
-          <div className="leading-tight">
-            <h3 className="font-bold text-sm">Contact</h3>
-            <p>P.O. Box 825, Athens, OH 45701</p>
-            <p>T: <a href="tel:17405977955" className="underline">1-740-597-7955</a></p>
-            <p>E: <a href="mailto:support@sopec-oh.gov" className="underline">support@sopec-oh.gov</a></p>
-            <h3 className="font-bold text-sm mt-2">Office Hours</h3>
-            <p>M-F 9AM - 5PM (By appointment)</p>
-          </div>
-
-          {/* Programs & Navigation */}
-          <div className="leading-tight">
-            <h3 className="font-bold text-sm">Programs</h3>
-            <p>Public Pricing Program</p>
-            <p>Solar Assessment Program</p>
-            <p>Clean Energy Research</p>
-
-            <h3 className="font-bold text-sm mt-2">Quick Links</h3>
-            <ul>
-              <li><Link href="/" className="underline">Home</Link></li>
-              <li><Link href="/about-sopec" className="underline">About SOPEC</Link></li>
-              <li><Link href="/services" className="underline">Services</Link></li>
-              <li><Link href="/group-rate" className="underline">Group Rate</Link></li>
-              <li><Link href="/news" className="underline">News & Updates</Link></li>
-            </ul>
+const Footer = () => (
+  <section className="w-full py-8 bg-primary text-white">
+    <div className="container mx-auto px-4 flex flex-col gap-10 md:gap-6">
+      {/* Top Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="flex flex-col md:flex-row md:justify-between md:items-start gap-10 md:gap-6"
+      >
+        {/* Logo + Address */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-left w-full md:max-w-[220px]">
+          <Link href="/" className="mb-2">
+            <Image
+              src={footerLogoInfo.src}
+              alt={footerLogoInfo.alt}
+              width={footerLogoInfo.width / 1.5}
+              height={footerLogoInfo.height / 1.5}
+              className="object-contain h-auto"
+              priority
+            />
+          </Link>
+          <h3 className="font-poppins font-semibold text-[14px] leading-[21px] text-white mb-1">
+            {footerAddressInfo.title}
+          </h3>
+          <div className="flex flex-col items-center md:items-start">
+            {footerAddressInfo.items.map((item: string, index: number) =>
+              renderListItem(item, index, footerAddressInfo.items)
+            )}
           </div>
         </div>
 
-        {/* Copyright Section */}
-        <div className="text-[10px] mt-3 border-t border-gray-500 pt-2 w-full">
-          © 2024 Sustainable Ohio Public Energy Council (SOPEC). All rights reserved.
+        {/* Main Content */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full text-center md:text-left">
+          {footerContactInfo.map((section: ContactSection) => (
+            <div key={section.title}>
+              <h4 className="font-poppins font-medium text-[14px] leading-[21px] text-gradient mb-2">
+                {section.title}
+              </h4>
+              <div className="flex flex-col items-center md:items-start">
+                {section.items.map((item: string | ContactItem, index: number) =>
+                  renderListItem(item, index, section.items)
+                )}
+              </div>
+            </div>
+          ))}
+
+          <div>
+            <h4 className="font-poppins font-medium text-[14px] leading-[21px] text-gradient mb-2">
+              {footerProgramList.title}
+            </h4>
+            <div className="flex flex-col items-center md:items-start">
+              {footerProgramList.items.map((item: string, index: number) =>
+                renderListItem(item, index, footerProgramList.items)
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Copyright + Socials */}
+      <div className="flex flex-col md:flex-row justify-between items-center border-t border-t-[#33bbcf] pt-4 gap-4">
+        <p className="font-poppins font-normal text-[12px] text-gray-300 text-center md:text-left">
+          {footerCopyright}
+        </p>
+        <div className="flex flex-row">
+          {socialMedia.map((social: SocialMediaItem, index: number) => (
+            <a
+              key={social.id}
+              href={social.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`cursor-pointer ${index !== socialMedia.length - 1 ? "mr-4" : "mr-0"}`}
+            >
+              <Image
+                src={social.icon}
+                alt={social.id}
+                width={18}
+                height={18}
+                className="object-contain"
+              />
+            </a>
+          ))}
         </div>
       </div>
-    </footer>
-  );
-}
+
+      {/* One-Line Quick Links + Newsletter Footer Blip */}
+      <motion.div
+        initial={{ opacity: 0, y: 5 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true }}
+        className="w-full border-t border-t-[#33bbcf] pt-3 pb-2 px-4 flex flex-wrap justify-center md:justify-between items-center gap-3 text-[11px] text-gray-300"
+      >
+        {/* Quick Links (inline) */}
+        <div className="flex flex-wrap justify-center gap-3">
+          {footerQuickLinks.items.map((link: QuickLink) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="hover:text-white underline whitespace-nowrap"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Newsletter Form */}
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="flex items-center gap-2"
+        >
+          <input
+            type="email"
+            placeholder="Email"
+            className="px-2 py-[4px] text-[11px] rounded-sm text-black w-[140px]"
+          />
+          <button
+            type="submit"
+            className="bg-white text-[#0B3D02] text-[11px] px-3 py-[4px] rounded-sm hover:bg-opacity-90"
+          >
+            Join
+          </button>
+        </form>
+      </motion.div>
+    </div>
+  </section>
+);
+
+export default Footer;
