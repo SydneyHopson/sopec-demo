@@ -5,16 +5,17 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 // Fix marker issue in Leaflet (important for Next.js)
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import markerIconSrc from "leaflet/dist/images/marker-icon.png";
+import markerShadowSrc from "leaflet/dist/images/marker-shadow.png";
 
 const customIcon = new L.Icon({
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
+  iconUrl: markerIconSrc.src, // 🔥 use .src
+  shadowUrl: markerShadowSrc.src, // 🔥 use .src
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
+
 
 const locations = [
   { name: "SOPEC Headquarters", lat: 40.167880, lng: -82.561717 },
