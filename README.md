@@ -1,8 +1,9 @@
 # 🌱 SOPEC Website Redesign – Internal Project README
 
-## 💼 Project Name
+## 📛 Project Name
 **SOPEC Website Redesign Demo**  
 _Official Website for the Southeast Ohio Public Energy Council (SOPEC)_
+
 
 ---
 
@@ -188,25 +189,21 @@ Fonts use `next/font` for Geist.
 **Portfolio:** https://tinyurl.com/ReignMobileAgency  
 **GitHub:** https://github.com/SydneyHopson
 
----
+🧑‍💼 Team Support 1
+Name: Jessie Fish
+Title: he has to add
+Contact: he has to add
+Phone: he has to add
+Portfolio: he has to add
+GitHub: he has to add
 
-## 🧑‍💼 Team Support 1
-**Name:** Jessie Fish  
-**Title:** he has to add  
-**Contact:** he has to add  
-**Phone:** he has to add  
-**Portfolio:** he has to add  
-**GitHub:** he has to add
-
----
-
-## 🧑‍💼 Team Project Manager
-**Name:** Add name here  
-**Title:** he has to add  
-**Contact:** he has to add  
-**Phone:** he has to add  
-**Portfolio:** he has to add  
-**GitHub:** he has to add
+🧑‍💼 Team Project Manager
+Name: Add name here
+Title: he has to add
+Contact: he has to add
+Phone: he has to add
+Portfolio: he has to add
+GitHub: he has to add
 
 ---
 
